@@ -1,3 +1,6 @@
+https://leetcode.com/problems/binary-subarrays-with-sum/
+
+
 class Solution {
     public int numSubarraysWithSum(int[] A, int S) {
         int n = A.length;
