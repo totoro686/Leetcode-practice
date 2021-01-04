@@ -1,0 +1,44 @@
+https://leetcode.com/problems/course-schedule-ii/
+
+
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] degree = new int[numCourses];
+        
+        HashMap<Integer, List<Integer>> graph = new HashMap<>();
+        
+        for(int[] edge : prerequisites){
+            int start = edge[1], end = edge[0];
+            degree[end]++;           
+            graph.putIfAbsent(start, new ArrayList<Integer>());            
+            graph.get(start).add(end);
+        }
+        
+        Queue<Integer> que = new LinkedList<>();
+        int[] result = new int[numCourses];
+        int index = 0, count = 0;
+        
+        for(int i = 0; i < numCourses; i++){
+            if(degree[i] == 0){
+                que.offer(i);
+            }
+        }
+        
+        while(!que.isEmpty()){
+            int course = que.poll();
+            if(graph.containsKey(course)){
+                for(int c : graph.get(course)){
+                    degree[c]--;
+                    if(degree[c] == 0){
+                        que.offer(c);
+                    }
+                }
+            }
+            result[index] = course;
+            index++;
+            count++;
+        }
+        
+        return count == numCourses ? result : new int[0];
+    }
+}
