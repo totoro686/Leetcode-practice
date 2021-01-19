@@ -1,0 +1,50 @@
+Take "apple" as an example, we will insert add "apple{apple", "pple{apple", "ple{apple", "le{apple", "e{apple", "{apple" into the Trie Tree.
+If the query is: prefix = "app", suffix = "le", we can find it by querying our trie for
+"le { app".
+We use '{' because in ASCii Table, '{' is next to 'z', so we just need to create new TrieNode[27] instead of 26. Also, compared with tradition Trie, we add the attribute weight in class TrieNode.
+
+
+
+class WordFilter {
+
+class TrieNode{
+    TrieNode[] children;
+    int weight;
+    public TrieNode(){
+        children = new TrieNode[27];   // 'a' - 'z' and '{'. 'z' and '{' are neighbours in ASCII table
+        weight = 0;
+    }
+    
+    
+    TrieNode root;
+    public WordFilter(String[] words) {
+        root = new TrieNode();
+        for (int weight = 0; weight < words.length; weight++) {
+            String currWord = words[weight] + "{";
+            for (int i = 0; i < currWord.length(); i++) {
+                TrieNode cur = root;
+                cur.weight = weight;
+                // add "apple{apple", "pple{apple", "ple{apple", "le{apple", "e{apple", "{apple" into the Trie Tree
+                for (int j = i; j < 2 * currWord.length() - 1; j++) {
+                    int k = currWord.charAt(j % currWord.length()) - 'a';
+                    if (cur.children[k] == null)
+                        cur.children[k] = new TrieNode();
+                    cur = cur.children[k];
+                    cur.weight = weight;
+                }
+            }
+        }
+    }
+    
+    public int f(String prefix, String suffix) {
+        TrieNode cur = root;
+        for (char letter: (suffix + '{' + prefix).toCharArray()) {
+            if (cur.children[letter - 'a'] == null) return -1;
+            cur = cur.children[letter - 'a'];
+        }
+        return cur.weight;
+    }
+}
+
+
+}
