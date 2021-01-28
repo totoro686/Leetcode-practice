@@ -1,0 +1,44 @@
+class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> res = new ArrayList<String>();
+        HashSet<String> word = new HashSet<>(wordDict);
+        // Do a fast check and see if we can break the input string
+        if (!canBreak(s, word)) return res;
+          
+        findWord(s, word, 0, "", res);
+        return res;
+    }
+    
+    public void findWord(String s, Set<String> dict, int start, String sol, List<String> res) {
+        if (start == s.length()) {
+            res.add(sol);
+        }
+        for (int i = start; i < s.length(); i++) {
+            String sub = s.substring(start, i + 1);
+
+            if (dict.contains(sub)){
+                findWord(s, dict, i + 1, sol + (sol.length() == 0 ? "" : " ") + sub, res);
+            }            
+        }
+    }
+    
+    // Solution from "Word Break"
+      public boolean canBreak(String s, Set<String> dict) {
+          if (s == null || s.length() == 0) return false;
+          int n = s.length();
+
+          boolean[] dp = new boolean[n+1];
+          dp[0] = true;
+          for (int i = 0; i < n+1; i++) {
+              for (int j = 0; j < i; j++) {
+                  if (dp[j] && dict.contains(s.substring(j, i))) {
+                      dp[i] = true;
+                      break;
+                  }
+              }
+          }
+          return dp[n];
+      }
+}
+
+
