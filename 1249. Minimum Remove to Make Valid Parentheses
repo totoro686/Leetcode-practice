@@ -1,0 +1,72 @@
+method 1:
+
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        if(s.length() == 0) return "";
+        
+        StringBuilder str = new StringBuilder();
+        int count = 0;
+        
+        char[] array = s.toCharArray();
+        
+        for(int i = 0; i < s.length(); i++){
+            if(array[i] == '(')  count++;  //stack.push(i);
+            if(array[i] == ')'){
+                if(count > 0 ){
+                    count--;
+                } else {
+                    array[i] = ' ';
+                }
+            }
+        }
+        
+        if(count > 0){
+            for(int i = 0; i < s.length(); i++){
+                if(count == 0) break;
+                if(array[i] == '('){
+                  array[i] = ' ';
+                    count--;
+                } 
+            }
+        }
+        
+        for(int i = 0; i < s.length(); i++){
+            if(array[i] != ' ') str.append(array[i]);
+        }
+        
+        return str.toString();        
+    }
+}
+
+
+method 2:
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        if(s.length() == 0) return "";
+        
+        Stack<Integer> stack = new Stack<>();
+        StringBuilder str = new StringBuilder();
+        
+        char[] array = s.toCharArray();
+        
+        for(int i = 0; i < s.length(); i++){
+            if(array[i] == '(') stack.push(i);
+            if(array[i] == ')'){
+                if(stack.isEmpty()){
+                    array[i] = ' ';
+                } else {
+                    stack.pop();
+                }
+            }
+        }
+        
+        while(!stack.isEmpty()) array[stack.pop()] = ' ';
+        
+        for(int i = 0; i < s.length(); i++){
+            if(array[i] != ' ') str.append(array[i]);
+        }
+        
+        return str.toString();
+        
+    }
+}
