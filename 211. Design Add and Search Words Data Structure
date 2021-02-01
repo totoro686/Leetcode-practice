@@ -1,0 +1,65 @@
+class WordDictionary {
+    static class Trie{
+        Trie child[];
+        boolean isWord;
+        Trie(){
+            child = new Trie[26];
+            isWord = false;
+        }
+    }
+    
+    Trie root;
+    /** Initialize your data structure here. */
+    public WordDictionary() {
+        root = new Trie();
+    }
+    
+    public void addWord(String word) {
+        Trie t = root;
+        for(int i = 0; i < word.length(); i++){
+            char c = word.charAt(i);
+            if(t.child[c - 'a'] == null) t.child[c - 'a'] = new Trie();
+            t = t.child[c - 'a'];
+        }
+       // t.isWord = true;
+    }
+    
+    public boolean search(String word) {
+        Trie curr = root;
+        Queue<Trie> queue = new LinkedList<>();
+        queue.add(curr);
+        
+        for(char c : word.toCharArray()){
+            int size = queue.size();
+            for(int i = 0; i < size; i++){
+                curr = queue.poll();
+                
+                if(c == '.'){
+                    for(int j = 0; j < 26; j++){
+                        if(curr.child[j] != null){
+                            queue.add(curr.child[j]);
+                        }
+                    }
+                } else {
+                    if(curr.child[c - 'a'] != null){
+                        queue.add(curr.child[c - 'a']);
+                    }
+                }
+            }
+        }
+        
+        while(!queue.isEmpty()){
+            curr = queue.poll();
+            if(curr.isWord) return true;
+        }
+        
+        return false;
+    }
+}
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord(word);
+ * boolean param_2 = obj.search(word);
+ */
