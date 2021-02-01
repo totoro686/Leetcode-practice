@@ -1,4 +1,4 @@
-method 1: quick sort
+method 1: quick select
 
 class Solution {
     public int findKthLargest(int[] nums, int k) {
@@ -11,9 +11,10 @@ class Solution {
       // use quick sort's idea
       // put nums that are <= pivot to the left
       // put nums that are  > pivot to the right
-      for (int j = low; j < high; j++) {
-        if (nums[j] <= nums[high]) {
-          swap(nums, pivot++, j);
+      for (int i = low; i < high; i++) {
+        if (nums[i] <= nums[high]) {
+          swap(nums, pivot, i);
+            pivot++;
         }
       }
       swap(nums, pivot, high);
