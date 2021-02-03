@@ -27,3 +27,13 @@ class Solution {
         return left;
     }
 }
+
+
+
+Declaration : 
+public int nextInt(int n)
+Parameters : 
+n :  This is the bound on the random number to be returned. Must be positive.
+Return Value : 
+Returns a random number.
+between 0 (inclusive) and n (exclusive).
