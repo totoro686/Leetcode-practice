@@ -1,0 +1,29 @@
+class Solution {
+    
+    List<Integer> list = new ArrayList<>();
+    Random ran;
+    int sum = 0;
+    
+    public Solution(int[] w) {
+        ran = new Random();
+        
+        for(int i = 0; i < w.length; i++){
+            sum += w[i];
+            list.add(sum);
+        }
+    }
+    
+    public int pickIndex() {
+        int target = ran.nextInt(sum); // ran.nextInt(3)  return 0,1,2
+        int left = 0, right = list.size() - 1;
+        while(left < right){
+            int mid = left + (right - left)/2;
+            if(target >= list.get(mid)){
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+}
