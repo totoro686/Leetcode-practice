@@ -1,4 +1,64 @@
+Method 1: preorder
 
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+    StringBuilder str = new StringBuilder();
+    
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root == null) return null;
+        preOrder(root);
+        System.out.print(str);
+        return str.toString();
+    }
+    
+    private void preOrder(TreeNode root){
+        if(root == null){
+            str.append("#,");
+            return;
+        } 
+        str.append(root.val + ",");
+        preOrder(root.left);
+        preOrder(root.right);
+    }
+    
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data == null) return null;
+        
+        String[] arr = data.split(",");
+        Queue<String> queue = new LinkedList<>();
+        for(String item: arr) {
+            queue.add(item);
+        }
+        return des(queue);
+    }   
+    
+    public TreeNode des(Queue<String> queue) {        
+        String cur = queue.poll();
+        if("#".equals(cur)) return null;
+        
+        TreeNode root = new TreeNode(Integer.valueOf(cur));
+        
+        root.left = des(queue);
+        root.right = des(queue);
+        return root;
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser = new Codec();
+// Codec deser = new Codec();
+// TreeNode ans = deser.deserialize(ser.serialize(root));
 
 
 Method 2: bit
