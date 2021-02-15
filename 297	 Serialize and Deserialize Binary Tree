@@ -1,0 +1,81 @@
+
+
+
+Method 2: bit
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+
+    private char NULL_VALUE = '0';
+    private char NOT_NULL_VALUE = '1';
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        preorderTree(root, sb);
+        return sb.toString();
+    }
+    
+    private void preorderTree(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append(NULL_VALUE);
+            return;
+        }
+        char[] array = intToBytes(node.val);
+        sb.append(NOT_NULL_VALUE).append(array[0]).append(array[1]).append(array[2]).append(array[3]);
+        preorderTree(node.left, sb);
+        preorderTree(node.right, sb);
+    }
+    
+    private char[] intToBytes(int x) {
+        return new char[]{
+            (char)((x >> 24) & 0xff),
+            (char)((x >> 16) & 0xff),
+            (char)((x >> 8) & 0xff),
+            (char)(x & 0xff)
+        };
+    }
+
+    // Decodes your encoded data to tree.
+    private int index;
+    public TreeNode deserialize(String data) {
+        index = 0;
+        return deHelper(data.toCharArray());
+    }
+    
+    private TreeNode deHelper(char[] data) {
+        char c = data[index];
+        index++;
+        if (c == NULL_VALUE) {
+            return null;
+        }
+
+        TreeNode node = new TreeNode(bytesToInt(new char[]{
+            data[index],
+            data[index + 1],
+            data[index + 2],
+            data[index + 3]
+        }));
+        index += 4;
+        node.left = deHelper(data);
+        node.right = deHelper(data);
+        return node;
+    }
+    
+    private int bytesToInt(char[] data) {
+       return (int) (data[0] << 24) 
+            | (data[1] << 16) 
+            | (data[2] << 8)
+            | data[3];
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.deserialize(codec.serialize(root));
