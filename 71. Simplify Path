@@ -1,5 +1,6 @@
 class Solution {
     public String simplifyPath(String path) {
+        if(path == null) return "";
         String ss[] = path.split("/");
         Stack<String> sta = new Stack<String>();
         
