@@ -47,3 +47,36 @@ class Solution {
 }
 
 DFS
+Preorder:
+class Solution {
+    int minDepth = Integer.MAX_VALUE;
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        walk(root, 0);
+        return minDepth;
+    }
+    
+    private void walk(TreeNode node, int depth) {
+        depth++;
+        if(node.left == null && node.right == null) {
+            minDepth = Math.min(depth, minDepth);
+            return;
+        }
+        if(node.left != null ) walk(node.left, depth);
+        if(node.right != null) walk(node.right, depth);
+    }
+}
+
+PostOrder:
+
+public int minDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        
+        return (left ==0 || right == 0) ? left + right + 1: Math.min(left, right) + 1;
+        
+    }
