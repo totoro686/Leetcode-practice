@@ -1,4 +1,4 @@
-method 1:
+method 1: two point
 
 class Solution {
     public String minRemoveToMakeValid(String s) {
@@ -39,7 +39,7 @@ class Solution {
 }
 
 
-method 2:
+method 2: stack
 class Solution {
     public String minRemoveToMakeValid(String s) {
         if(s.length() == 0) return "";
