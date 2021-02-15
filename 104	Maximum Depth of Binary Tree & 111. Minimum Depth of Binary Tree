@@ -56,14 +56,14 @@ class Solution {
         return minDepth;
     }
     
-    private void walk(TreeNode node, int depth) {
+    private void walk(TreeNode root, int depth) {
         depth++;
-        if(node.left == null && node.right == null) {
+        if(root.left == null && root.right == null) {
             minDepth = Math.min(depth, minDepth);
             return;
         }
-        if(node.left != null ) walk(node.left, depth);
-        if(node.right != null) walk(node.right, depth);
+        if(root.left != null ) walk(root.left, depth);
+        if(root.right != null) walk(root.right, depth);
     }
 }
 
