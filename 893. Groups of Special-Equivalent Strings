@@ -1,0 +1,27 @@
+class Solution {
+    public int numSpecialEquivGroups(String[] A) {
+        Set<String> set = new HashSet<>();
+        for (String s : A) {
+            String key = getFreq(s, 0) + ":" + getFreq(s, 1);
+            set.add(key);
+        }
+        System.out.print(set);
+        return set.size();
+    }
+    
+    private String getFreq(String s, int parity) {
+        int[] count = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            if (i % 2 == parity) 
+                count[s.charAt(i) - 'a']++;
+        }
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            if (count[i] > 0) {
+                ret.append(count[i]);
+                ret.append((char)(i + 'a'));
+            }
+        }
+        return ret.toString();
+    }
+}
