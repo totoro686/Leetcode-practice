@@ -21,33 +21,19 @@ class Solution {
         // map will save key(old node) value (new node)
         Map<Node,Node> map = new HashMap<>();
         
-        Node ans = new Node(0);
-        Node t = ans;
-        Node p = head;
-        
-        while( p != null){
-            // Clone Next Node
-            Node cp = null;
-            if(map.containsKey(p)){
-                cp = map.get(p);
-             }else{
-                cp = new Node(p.val);
-                map.put(p, cp);
-            }
-            t.next = cp;
-            // Clone Random Node
-            if(p.random != null) {
-                if(map.containsKey(p.random)){
-                    cp.random = map.get(p.random);
-                }else{
-                   Node r = new Node(p.random.val);
-                    cp.random = r;
-                    map.put(p.random, r);
-                }
-            }
-            p = p.next;
-            t = t.next;
+        Node curr = head;
+        while(curr != null){
+            map.put(curr, new Node(curr.val));
+            curr = curr.next;
         }
-        return ans.next;
+        
+        curr = head;
+        while(curr != null){
+            map.get(curr).next = map.get(curr.next);
+            map.get(curr).random = map.get(curr.random);
+            curr = curr.next;
+        }
+        
+        return map.get(head);
     }
 }
