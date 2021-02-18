@@ -1,0 +1,57 @@
+Method 1: DFS
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class BSTIterator {
+    List<Integer> lst = new ArrayList();
+    int idx = 0;
+    
+    public BSTIterator(TreeNode root) {
+        dfs(root);
+    }
+    
+    public void dfs(TreeNode root) {
+        if (root == null) return;
+        if (root.left != null) {
+            dfs(root.left);
+        }
+        lst.add(root.val);
+        if (root.right != null) {
+            dfs(root.right);
+        }
+    }
+    
+    /** @return the next smallest number */
+    public int next() {
+        return lst.get(idx++);
+    }
+    
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return idx < lst.size();
+    }
+}
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * BSTIterator obj = new BSTIterator(root);
+ * int param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
+ 
+ 
+ Method 2: stack
+ 
