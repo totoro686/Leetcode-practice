@@ -54,18 +54,18 @@ class Solution {
                 end =  pivot - 1;
         }
         return nums[start];
-        
+         
     }
     
-    private int partition(int[] nums, int start, int end) {
-        int pivotIndex = start;
-        while (start <= end) {
-            while(start <= end && nums[start] <= nums[pivotIndex]) start++;
-            while(start <= end && nums[end] > nums[pivotIndex]) end--;
-            if (start > end) break;
+    private int partition(int[] nums, int start, int end){
+        int pivot = start;
+        while(start <= end){
+            while(start <= end && nums[start] <= nums[pivot]) start++;
+            while(start <= end && nums[end] > nums[pivot]) end--;
+            if(start > end) break;
             swap(nums, start, end);
         }
-        swap(nums, pivotIndex, end);
+        swap(nums, pivot, end);
         return end;
     }
     
