@@ -19,7 +19,7 @@ class Solution {
                 
                 if(isPalindrome(str1)){
                     String reverseStr2 = new StringBuilder(str2).reverse().toString();
-                    if(map.containsKey(reverseStr2) && map.get(reverseStr2) != i && str1.length() != 0){
+                    if(map.containsKey(reverseStr2) && map.get(reverseStr2) != i && str1.length() != 0){  // str1.length() != 0 remove duplicate
                         List<Integer> temp = new ArrayList<>();
                         temp.add(map.get(reverseStr2));
                         temp.add(i);
