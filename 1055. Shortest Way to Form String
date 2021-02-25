@@ -33,3 +33,34 @@ class Solution {
         // The "startIdx" is from the next position of the previous "idx"
 
 */
+
+
+Method 2:
+
+Take source = "xyz", target = "xzyxa" for example:
+
+x z
+ y
+x z
+
+If we read following rows top-down, target is formed.
+the minimum number of subsequences of source such that their concatenation equals target means for each loop of source, we match characters of target in order as more as possible. If there is no matches when target is not concatenated successfully, we return -1.
+
+    public int shortestWay(String source, String target) {
+        int j = 0; // Pointer in target
+        int minSubseq = 0;
+        
+        while (j < target.length()) {
+            boolean matched = false; // When true, subsequences of source can match target 
+            for (int i = 0; i < source.length() && j < target.length(); i++) {
+                if (source.charAt(i) == target.charAt(j)) {
+                    j++;
+                    matched = true;
+                }
+            }
+            if (!matched)
+                return -1;
+            minSubseq++;
+        }
+        return minSubseq;
+    }
