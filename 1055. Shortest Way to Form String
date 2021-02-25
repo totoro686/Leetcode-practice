@@ -1,0 +1,35 @@
+Method 1:
+
+class Solution {
+    public int shortestWay(String source, String target) {
+        int count = 1, startIdx = 0, len = target.length(), i = 0;
+        
+        while (i < len)
+        {
+            char c = target.charAt(i);
+            int idx = source.indexOf(c, startIdx);
+            
+            if (idx == -1)
+            {
+                // The "c" does not exist in source
+                if (startIdx == 0)
+                    return -1;
+                
+                // If not found, start from origin again and "count++"
+                count++;
+                startIdx = 0;
+            }
+            else
+            {
+                startIdx = idx + 1;
+                i++;
+            }
+        }
+        return count;
+    }
+}
+/*
+        // Find every char of target in source
+        // The "startIdx" is from the next position of the previous "idx"
+
+*/
