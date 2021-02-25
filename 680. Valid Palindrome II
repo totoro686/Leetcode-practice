@@ -1,6 +1,38 @@
 class Solution {
     public boolean validPalindrome(String s) {
         if(s == null) return true;
+        int l = 0, r = s.length()-1;
+        
+        while(l < r){
+            if(s.charAt(l) != s.charAt(r)){
+                return isPali(s, l+1, r) || isPali(s, l, r-1);
+            }
+            l++;
+            r--;
+        }
+        
+        return true;
+    }
+    
+    private boolean isPali(String s, int l, int r){
+        while(l < r){
+            if(s.charAt(l) != s.charAt(r)){
+                return false;                
+            }
+            l++;
+            r--;
+        }
+        return true;        
+    }
+}
+
+
+
+
+methid 2:
+class Solution {
+    public boolean validPalindrome(String s) {
+        if(s == null) return true;
         int i = 0, j = s.length() - 1;
         
         while (i < j) {
