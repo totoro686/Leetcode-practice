@@ -1,0 +1,49 @@
+415 ：
+
+class Solution {
+    public String addStrings(String num1, String num2) {     
+        StringBuilder res = new StringBuilder();
+        
+        int carry = 0;
+        int index1 = num1.length() - 1;
+        int index2 = num2.length() - 1;
+        while(index1 >= 0 || index2 >= 0){
+            int x1 = index1 >= 0 ? num1.charAt(index1) - '0' : 0;
+            int x2 = index2 >= 0 ? num2.charAt(index2) - '0' : 0;
+            int value = (x1 + x2 + carry)%10;
+            carry = (x1 + x2 + carry)/10;
+            res.append(value);
+            index1--;
+            index2--;
+        }
+        
+        if(carry!= 0) res.append(carry);
+        return res.reverse().toString();
+    }
+}
+
+
+67：
+
+class Solution {
+    public String addBinary(String a, String b) {
+        if(a == null && b == null) return null;
+        int carry = 0, lenA = a.length()-1, lenB = b.length()-1;
+        StringBuilder str = new StringBuilder();
+        
+        while(lenA >= 0 || lenB >= 0){
+            int n1 = lenA >= 0 ? a.charAt(lenA) - '0' : 0;
+            int n2 = lenB >= 0 ? b.charAt(lenB) - '0' : 0;
+            
+            int num = (n1+n2+carry)%2;
+            carry = (n1+n2+carry)/2;
+            str.append(num);
+            lenA--;
+            lenB--;
+        }
+        
+        if(carry != 0) str.append(carry);
+        return str.reverse().toString();
+        
+    }
+}
