@@ -1,0 +1,58 @@
+1047 Method:
+
+class Solution {
+    public String removeDuplicates(String S) {
+        if(S.length() == 0) {
+            return S;
+        }
+        Stack<Character> stack = new Stack<>();
+        StringBuilder str = new StringBuilder();
+        
+        for(int i = 0; i < S.length(); i++){
+            if(!stack.isEmpty() && S.charAt(i) == stack.peek()){
+                stack.pop();
+            } else {
+                stack.push(S.charAt(i));
+            }
+        }
+        
+        while(!stack.isEmpty()){
+            str.append(stack.pop());
+        }
+         
+        return str.reverse().toString();
+    }
+}
+
+
+1029 Method:
+
+class Solution {
+    public String removeDuplicates(String s, int k) {
+        Stack<String> stack = new Stack<>();
+        
+        for(int i = 0; i < s.length(); i++) {
+            if(stack.isEmpty()) {
+                stack.push(s.charAt(i) + "");
+            } else {
+                if(stack.peek().contains(s.charAt(i) + "")) {
+                    if(stack.peek().length() + 1 == k) {
+                        stack.pop();
+                    } else {
+                        stack.push(stack.pop() + s.charAt(i));
+                     }
+                } else {
+                    stack.push(s.charAt(i) + "");
+                }
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while(!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        
+        return sb.reverse().toString();
+    }
+}
