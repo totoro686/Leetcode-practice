@@ -6,7 +6,7 @@ class Solution {
         Stack<Integer> stack = new Stack<>();
         stack.push(-1);
         
-        for(int i = 0; i < s.length(); i++){
+        for(int i = 0; i < s.ength(); i++){
             if(s.charAt(i) == '('){
                 stack.push(i);
             } else {
@@ -38,7 +38,7 @@ public class Solution {
             }
             if (left == right) {
                 maxlength = Math.max(maxlength, 2 * right);
-            } else if (right >= left) {
+            } else if (right > left) {
                 left = right = 0;
             }
         }
@@ -51,7 +51,7 @@ public class Solution {
             }
             if (left == right) {
                 maxlength = Math.max(maxlength, 2 * left);
-            } else if (left >= right) {
+            } else if (left > right) {
                 left = right = 0;
             }
         }
