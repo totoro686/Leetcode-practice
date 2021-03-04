@@ -1,0 +1,61 @@
+
+
+As you can see, solution setups are similar with regards to keeping counts of indegrees and saving graph as an adjacency list. 
+Line counts are similar, with DFS slightly faster than BFS. However, worst case for DFS is O(V * E) vs BFS O(V + E). 
+Personally I prefer BFS in this case because there is no helper function to write which means less overhead.
+
+Method 1: DFS: 4ms 78% time 100% memory
+
+class Solution {
+    Set<Integer> visited = new HashSet();
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegree = new int[numCourses];
+        Map<Integer, List<Integer>> m = new HashMap();
+        for (int[] pre : prerequisites) {
+            m.putIfAbsent(pre[1], new ArrayList());
+            m.get(pre[1]).add(pre[0]);
+            indegree[pre[0]]++;
+        }
+        for (int i = 0; i < indegree.length; i++)
+            if (indegree[i] == 0 && !visited.contains(i))
+                dfs(i, m, indegree);
+        return visited.size() == numCourses;
+    }
+    public void dfs(int start, Map<Integer, List<Integer>> m, int[] indegree) {
+        visited.add(start);
+        if (m.get(start) == null) return;
+        for (int i : m.get(start)) {
+            if (indegree[i] > 0) indegree[i]--;
+            if (indegree[i] == 0 && !visited.contains(i)) dfs(i, m, indegree);
+        }
+    }
+}
+
+
+Method 2: BFS: 5ms 68% time 100% memory
+
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegree = new int[numCourses];
+        Map<Integer, List<Integer>> m = new HashMap();
+        for (int[] pre : prerequisites) {
+            m.putIfAbsent(pre[1], new ArrayList());
+            m.get(pre[1]).add(pre[0]);
+            indegree[pre[0]]++;
+        }
+        Queue<Integer> q = new LinkedList();
+        for (int i = 0; i < indegree.length; i++)
+            if (indegree[i] == 0) q.add(i);//no dependencies
+        while (q.size() > 0) {
+            int cur = q.poll();
+            numCourses--;
+            List<Integer> l = m.get(cur);
+            if (l == null) continue;
+            for (int i : l) {
+                indegree[i]--;
+                if (indegree[i] == 0) q.add(i);
+            }  
+        }
+        return numCourses == 0;
+    }
+}
