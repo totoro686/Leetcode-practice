@@ -2,25 +2,28 @@
 
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> result = new ArrayList<>();
-        if(candidates.length == 0) return result;
-        findCombinationSum(result, candidates, new ArrayList<>(), target, 0);
-        return result;
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+
+        dfs(candidates, temp, res, target, 0);
+        return res;
     }
     
-    public void findCombinationSum(List<List<Integer>> result, int[] candidates, List<Integer> curr, int target, int index){
+    public void dfs(int[] candidates, List<Integer> temp, List<List<Integer>> res, int target, int index){
         if(target < 0) return;
         if(target == 0){
-            result.add(new ArrayList<>(curr));
+            res.add(new ArrayList<>(temp));
+            return;
         } 
         // 从index开始不能回头
         for(int i = index; i < candidates.length; i++){
-            curr.add(candidates[i]); //2, 2, 3
-            findCombinationSum(result, candidates, curr, target - candidates[i], i);
-            curr.remove(curr.size() - 1);
+            temp.add(candidates[i]); 
+            dfs(candidates, temp, res, target - candidates[i], i);
+            temp.remove(temp.size() - 1);
         }
-    }   
+    }
 }
+
 
 40. Combination Sum II
 
@@ -99,6 +102,31 @@ class Solution {
         }
     }
 }
+
+78. Subsets
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        dfs(nums, temp, result, 0);
+        return result;
+    }
+    
+    private void dfs(int[] nums,  List<Integer> temp, List<List<Integer>> result, int index){
+        result.add(new ArrayList<>(temp));
+        
+        for(int i = index; i < nums.length; i++){
+            temp.add(nums[i]);
+            dfs(nums, temp, result, i+1);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
+
+Subsets II
+
+
 
 
 31. Next Permutation
