@@ -1,0 +1,137 @@
+39. Combination Sum
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(candidates.length == 0) return result;
+        findCombinationSum(result, candidates, new ArrayList<>(), target, 0);
+        return result;
+    }
+    
+    public void findCombinationSum(List<List<Integer>> result, int[] candidates, List<Integer> curr, int target, int index){
+        if(target < 0) return;
+        if(target == 0){
+            result.add(new ArrayList<>(curr));
+        } 
+        // 从index开始不能回头
+        for(int i = index; i < candidates.length; i++){
+            curr.add(candidates[i]); //2, 2, 3
+            findCombinationSum(result, candidates, curr, target - candidates[i], i);
+            curr.remove(curr.size() - 1);
+        }
+    }   
+}
+
+40. Combination Sum II
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    List<List<Integer>> res = new ArrayList<>();
+    List<Integer> temp = new ArrayList<>();
+    Arrays.sort(candidates);
+    dfs(res, temp, candidates, target, 0);
+    return res;
+  }
+  
+  private void dfs(List<List<Integer>> res, List<Integer> temp, int[] candidates, int target, int index){
+    if (target < 0) return;
+    if (target == 0) res.add(new ArrayList<>(temp));
+    for(int i = index; i < candidates.length; i++){
+        if(i > index && candidates[i] == candidates[i-1]) continue;
+          temp.add(candidates[i]);
+          dfs(res, temp, candidates, target - candidates[i], i+1);
+          temp.remove(temp.size() - 1);
+        }     
+    }
+}
+
+46. Permutations
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        dfs(nums, temp, result);
+        return result;
+    }
+    
+    private void dfs(int[] nums, List<Integer> temp, List<List<Integer>> result){
+        if(temp.size() == nums.length){
+            result.add(;
+            return;
+        }
+        
+        for(int i = 0; i < nums.length; i++){
+            if(temp.contains(nums[i])) continue;
+            temp.add(nums[i]);
+            dfs(nums, temp, result);
+            temp.remove(temp.size() - 1);
+        }
+    }
+}
+
+47. Permutations II
+
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        List<Integer> subList = new ArrayList<>();
+        boolean[] used = new boolean[nums.length];
+        Arrays.sort(nums);
+        helper(list, subList, nums, used);
+        return list;
+    }
+    
+    public void helper(List<List<Integer>> list, List<Integer> subList, int[] nums, boolean[] used){
+        if(subList.size() == nums.length){
+            list.add(new ArrayList<>(subList));
+        }   
+            for(int i = 0; i < nums.length; i++){
+                if(used[i] || (i > 0 && nums[i] == nums[i -1] && !used[i - 1])){
+                    continue;
+                }
+                used[i] = true;
+                subList.add(nums[i]);
+                helper(list, subList, nums, used);
+                used[i] = false;
+                subList.remove(subList.size() - 1);
+            }
+    }
+}
+
+
+31. Next Permutation
+
+class Solution {
+    public void nextPermutation(int[] nums) {       
+        if(nums.length == 0) return;
+        int index = nums.length - 2;
+        while(index >= 0 && nums[index] >= nums[index+1]){
+            index--;
+        }
+        
+        if(index >= 0){
+            int j = nums.length-1;
+            while(nums[j] <= nums[index]){
+                j--;
+            }
+            swap(nums, index, j);
+        }
+        
+        reverse(nums, index+1, nums.length-1);
+    }
+    
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+    public void reverse(int[] nums, int i, int j){
+        while(i < j){
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }  
+}
+
